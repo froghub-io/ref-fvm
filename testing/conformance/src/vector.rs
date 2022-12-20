@@ -90,6 +90,7 @@ impl Selector {
 pub struct Variant {
     pub id: String,
     pub epoch: ChainEpoch,
+    pub timestamp: Option<u64>,
     pub nv: u32,
 }
 
@@ -122,7 +123,15 @@ pub struct RandomnessRule {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+pub struct TipsetCid {
+    pub epoch: ChainEpoch,
+    pub cid: Cid,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct MessageVector {
+    pub chain_id: Option<u64>,
+
     pub selector: Option<Selector>,
     #[serde(rename = "_meta")]
     pub meta: Option<MetaData>,
@@ -135,6 +144,9 @@ pub struct MessageVector {
 
     #[serde(default)]
     pub randomness: Randomness,
+
+    #[serde(default)]
+    pub tipset_cids: Option<Vec<TipsetCid>>,
 }
 
 impl MessageVector {

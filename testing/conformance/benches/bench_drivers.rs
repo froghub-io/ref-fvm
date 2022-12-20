@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0, MIT
 extern crate criterion;
 
+use colored::Colorize;
 use criterion::*;
 use fvm::engine::MultiEngine;
 use fvm::executor::{ApplyKind, DefaultExecutor, Executor};
 use fvm::machine::Machine;
 use fvm_conformance_tests::driver::*;
+use fvm_conformance_tests::report;
 use fvm_conformance_tests::vector::{MessageVector, Variant};
 use fvm_conformance_tests::vm::{TestKernel, TestMachine};
 use fvm_ipld_blockstore::MemoryBlockstore;
@@ -121,32 +123,47 @@ pub fn bench_vector_file(
             },
         };
 
-        if let VariantResult::Ok { .. } = testresult {
-            let messages_with_lengths: Vec<(Message, usize)> = vector
-                .apply_messages
-                .iter()
-                .map(|m| {
-                    let unmarshalled: Message = from_slice(&m.bytes).unwrap();
-                    let mut raw_length = m.bytes.len();
-                    if unmarshalled.from.protocol() == Protocol::Secp256k1 {
-                        // 65 bytes signature + 1 byte type + 3 bytes for field info.
-                        raw_length += SECP_SIG_LEN + 4;
-                    }
-                    (unmarshalled, raw_length)
-                })
-                .collect();
-            bench_vector_variant(
-                group,
-                name,
-                variant,
-                vector,
-                messages_with_lengths,
-                &bs,
-                engines,
-            );
-        } else {
-            return Err(anyhow::anyhow!("a test failed, get the tests passing/running before running benchmarks in {:?} mode: {}", check_strength, name));
-        };
+        // if let VariantResult::Ok { .. } = testresult {
+        //     let messages_with_lengths: Vec<(Message, usize)> = vector
+        //         .apply_messages
+        //         .iter()
+        //         .map(|m| {
+        //             let unmarshalled: Message = from_slice(&m.bytes).unwrap();
+        //             let mut raw_length = m.bytes.len();
+        //             if unmarshalled.from.protocol() == Protocol::Secp256k1 {
+        //                 // 65 bytes signature + 1 byte type + 3 bytes for field info.
+        //                 raw_length += SECP_SIG_LEN + 4;
+        //             }
+        //             (unmarshalled, raw_length)
+        //         })
+        //         .collect();
+        //     bench_vector_variant(
+        //         group,
+        //         name,
+        //         variant,
+        //         vector,
+        //         messages_with_lengths,
+        //         &bs,
+        //         engines,
+        //     );
+        // } else {
+        //     return Err(anyhow::anyhow!("a test failed, get the tests passing/running before running benchmarks in {:?} mode: {}", check_strength, name));
+        // };
+        match testresult {
+            VariantResult::Ok { id } => {
+                report!("OK".on_green(), name, id);
+            }
+            VariantResult::Failed { reason, id } => {
+                report!("FAIL".white().on_red(), name, id);
+                println!("\t|> reason: {:#}", reason);
+                return Err(anyhow::anyhow!("a test failed, get the tests passing/running before running benchmarks in {:?} mode: {}", check_strength, name));
+            }
+            VariantResult::Skipped { reason, id } => {
+                report!("SKIP".on_yellow(), name, id);
+                println!("\t|> reason: {}", reason);
+                return Err(anyhow::anyhow!("a test failed, get the tests passing/running before running benchmarks in {:?} mode: {}", check_strength, name));
+            }
+        }
     }
     Ok(())
 }

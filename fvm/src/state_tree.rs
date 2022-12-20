@@ -11,11 +11,12 @@ use cid::{multihash, Cid};
 use fvm_ipld_blockstore::Blockstore;
 use fvm_ipld_encoding::tuple::*;
 use fvm_ipld_encoding::CborStore;
-use fvm_ipld_hamt::Hamt;
+use fvm_ipld_hamt::{BytesKey, Hamt};
 use fvm_shared::address::{Address, Payload};
 use fvm_shared::econ::TokenAmount;
 use fvm_shared::state::{StateInfo0, StateRoot, StateTreeVersion};
 use fvm_shared::{ActorID, HAMT_BIT_WIDTH};
+use lazy_static::__Deref;
 use num_traits::Zero;
 #[cfg(feature = "arb")]
 use quickcheck::Arbitrary;
@@ -292,9 +293,19 @@ where
             ))),
 
             StateTreeVersion::V5 => {
-                let hamt = Hamt::load_with_bit_width(&actors, store, HAMT_BIT_WIDTH)
+                let mut hamt = Hamt::load_with_bit_width(&actors, store, HAMT_BIT_WIDTH)
                     .context("failed to load state tree")
                     .or_fatal()?;
+
+                let mut map: HashMap<Vec<u8>, ActorState> = HashMap::new();
+                hamt.for_each(|key: &BytesKey, act: &ActorState| {
+                    // println!("key:{:?}, act:{:?}", key, act);
+                    map.insert(key.deref().clone(), act.clone());
+                    Ok(())
+                });
+                for (key, act) in map.into_iter() {
+                    hamt.set(key.into(), act).unwrap();
+                }
 
                 Ok(Self {
                     hamt,
