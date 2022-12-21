@@ -499,6 +499,7 @@ where
 
         // Store the parametrs, and initialize the block registry for the target actor.
         let mut block_registry = BlockRegistry::new();
+        let params_bak = params.clone();
         let params_id = if let Some(blk) = params {
             block_registry.put(blk)?
         } else {
@@ -518,7 +519,13 @@ where
                 |_| syscall_error!(NotFound; "actor code cid does not exist {}", &state.code),
             )?;
 
-        log::trace!("calling {} -> {}::{}", from, to, method);
+        log::trace!(
+            "calling {} -> {}::{}, param:{:?}",
+            from,
+            to,
+            method,
+            params_bak
+        );
         self.map_mut(|cm| {
             let engine = cm.engine.clone(); // reference the RC.
 
@@ -677,11 +684,12 @@ where
             if log::log_enabled!(log::Level::Trace) {
                 match &ret {
                     Ok(val) => log::trace!(
-                        "returning {}::{} -> {} ({})",
+                        "returning {}::{} -> {} ({}, value:{:?})",
                         to,
                         method,
                         from,
-                        val.exit_code
+                        val.exit_code,
+                        val.value,
                     ),
                     Err(e) => log::trace!("failing {}::{} -> {} (err:{})", to, method, from, e),
                 }
