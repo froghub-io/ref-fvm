@@ -293,35 +293,9 @@ where
             ))),
 
             StateTreeVersion::V5 => {
-                let mut hamt = Hamt::load_with_bit_width(&actors, store, HAMT_BIT_WIDTH)
+                let hamt = Hamt::load_with_bit_width(&actors, store, HAMT_BIT_WIDTH)
                     .context("failed to load state tree")
                     .or_fatal()?;
-
-                let before_target_addr = Address::new_id(101);
-                let before_target_actor = hamt.get(&before_target_addr.to_bytes()).unwrap();
-                log::trace!(
-                    "before_target_addr {} state {:?}",
-                    before_target_addr.to_string(),
-                    &before_target_actor
-                );
-
-                let mut map: HashMap<Vec<u8>, ActorState> = HashMap::new();
-                hamt.for_each(|key: &BytesKey, act: &ActorState| {
-                    // println!("key:{:?}, act:{:?}", key, act);
-                    map.insert(key.deref().clone(), act.clone());
-                    Ok(())
-                });
-                for (key, act) in map.into_iter() {
-                    hamt.set(key.into(), act).unwrap();
-                }
-
-                let after_target_addr = Address::new_id(101);
-                let after_target_actor = hamt.get(&after_target_addr.to_bytes()).unwrap();
-                log::trace!(
-                    "after_target_addr {} state {:?}",
-                    after_target_addr.to_string(),
-                    &after_target_actor
-                );
 
                 Ok(Self {
                     hamt,

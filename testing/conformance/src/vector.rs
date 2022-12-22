@@ -16,8 +16,10 @@ use futures::AsyncRead;
 use fvm_ipld_blockstore::MemoryBlockstore;
 use fvm_ipld_car::load_car;
 use fvm_ipld_encoding::tuple::*;
+use fvm_shared::address::Address;
 use fvm_shared::clock::ChainEpoch;
 use fvm_shared::receipt::Receipt;
+use fvm_shared::ActorID;
 use serde::{Deserialize, Deserializer};
 
 #[derive(Debug, Deserialize, Clone)]
@@ -141,6 +143,13 @@ pub struct MessageVector {
     pub preconditions: PreConditions,
     pub apply_messages: Vec<ApplyMessage>,
     pub postconditions: PostConditions,
+
+    pub skip_compare_gas_used: bool,
+    #[serde(with = "address_vec")]
+    pub skip_compare_addresses: Option<Vec<Address>>,
+    pub skip_compare_actor_ids: Option<Vec<ActorID>>,
+    #[serde(with = "address_vec")]
+    pub additional_compare_addresses: Option<Vec<Address>>,
 
     #[serde(default)]
     pub randomness: Randomness,
@@ -269,6 +278,43 @@ mod message_receipt_vec {
                 events_root: None,
             })
             .collect())
+    }
+}
+
+mod address_vec {
+    use std::str::FromStr;
+
+    use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
+    use super::*;
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<Vec<Address>>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: Option<Vec<String>> = Deserialize::deserialize(deserializer)?;
+        if let Some(data) = s {
+            let addr_strs: Vec<Address> = data
+                .into_iter()
+                .map(|v| Address::from_str(v.as_str()).unwrap())
+                .collect();
+            return Ok(Some(addr_strs));
+        }
+        Ok(None)
+    }
+
+    pub fn serialize<S>(
+        data: &Option<Vec<Address>>,
+        serializer: S,
+    ) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        if let Some(addrs) = data {
+            let output: Vec<String> = addrs.into_iter().map(|v| v.to_string()).collect();
+            return Some(output).serialize(serializer);
+        }
+        return serializer.serialize_none();
     }
 }
 
