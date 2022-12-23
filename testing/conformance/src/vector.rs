@@ -127,6 +127,7 @@ pub struct RandomnessRule {
 #[derive(Debug, Deserialize, Clone)]
 pub struct TipsetCid {
     pub epoch: ChainEpoch,
+    #[serde(with = "super::cidjson")]
     pub cid: Cid,
 }
 

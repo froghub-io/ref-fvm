@@ -120,9 +120,9 @@ fn compare_actors(
     identifier: impl Display,
     actual: Option<ActorState>,
     expected: Option<ActorState>,
-) -> Result<()> {
+) -> Result<bool> {
     if actual == expected {
-        return Ok(());
+        return Ok(true);
     }
     log::error!(
         "{} actor state differs: {:?} != {:?}",
@@ -147,7 +147,7 @@ fn compare_actors(
         }
         _ => {}
     }
-    Ok(())
+    Ok(false)
 }
 
 /// Compares the state-root with the postcondition state-root in the test vector. If they don't
@@ -159,6 +159,7 @@ fn compare_state_roots(bs: &MemoryBlockstore, root: &Cid, vector: &MessageVector
     let additional_compare_addresses = vector.additional_compare_addresses.clone();
 
     let mut need_compare_root = false;
+    let mut compare_actors_success = true;
     if matches!(skip_compare_addresses, None) && matches!(skip_compare_actor_ids, None) {
         need_compare_root = true;
     }
@@ -181,14 +182,18 @@ fn compare_state_roots(bs: &MemoryBlockstore, root: &Cid, vector: &MessageVector
         {
             let actual_actor = actual_st.get_actor_by_address(&msg.from)?;
             let expected_actor = expected_st.get_actor_by_address(&msg.from)?;
-            compare_actors(bs, "sender", actual_actor, expected_actor)?;
+            if !compare_actors(bs, "sender", actual_actor, expected_actor)? {
+                compare_actors_success = false;
+            }
         }
 
         if matches!(skip_compare_addresses.clone(), Some(skip_addrs) if !skip_addrs.contains(&msg.to))
         {
             let actual_actor = actual_st.get_actor_by_address(&msg.to)?;
             let expected_actor = expected_st.get_actor_by_address(&msg.to)?;
-            compare_actors(bs, "receiver", actual_actor, expected_actor)?;
+            if !compare_actors(bs, "receiver", actual_actor, expected_actor)? {
+                compare_actors_success = false;
+            }
         }
     }
 
@@ -196,7 +201,9 @@ fn compare_state_roots(bs: &MemoryBlockstore, root: &Cid, vector: &MessageVector
         for addr in addrs {
             let actual_actor = actual_st.get_actor_by_address(&addr)?;
             let expected_actor = expected_st.get_actor_by_address(&addr)?;
-            compare_actors(bs, &addr.to_string(), actual_actor, expected_actor)?;
+            if !compare_actors(bs, &addr.to_string(), actual_actor, expected_actor)? {
+                compare_actors_success = false;
+            }
         }
     }
 
@@ -211,12 +218,14 @@ fn compare_state_roots(bs: &MemoryBlockstore, root: &Cid, vector: &MessageVector
             Err(_) => continue, // we don't expect it anyways.
         };
         let actual_actor = actual_st.get_actor(id)?;
-        compare_actors(
+        if !compare_actors(
             bs,
             format_args!("builtin {}", id),
             actual_actor,
             expected_actor,
-        )?;
+        )? {
+            compare_actors_success = false;
+        }
     }
 
     if need_compare_root {
@@ -226,7 +235,10 @@ fn compare_state_roots(bs: &MemoryBlockstore, root: &Cid, vector: &MessageVector
             root
         ));
     } else {
-        return Ok(());
+        if compare_actors_success {
+            return Ok(());
+        }
+        return Err(anyhow!("compare actors fail"));
     }
 }
 
