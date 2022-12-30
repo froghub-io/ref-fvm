@@ -10,7 +10,7 @@ use super::Blockstore;
 
 #[derive(Debug, Default, Clone)]
 pub struct MemoryBlockstore {
-    blocks: RefCell<HashMap<Cid, Vec<u8>>>,
+    pub blocks: RefCell<HashMap<Cid, Vec<u8>>>,
 }
 
 impl MemoryBlockstore {

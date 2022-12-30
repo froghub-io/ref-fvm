@@ -1,10 +1,19 @@
 use std::collections::BTreeMap;
+use std::env::var;
 // Copyright 2021-2023 Protocol Labs
 // SPDX-License-Identifier: Apache-2.0, MIT
 use std::fmt;
+use std::fs::File;
+use std::io::{BufWriter, Write};
+use std::path::{Path, PathBuf};
+use std::sync::Arc;
 use std::time::Instant;
 
 use anyhow::{anyhow, Result};
+use async_std::channel::bounded;
+use async_std::sync::RwLock;
+use async_std::task::block_on;
+use byteorder::WriteBytesExt;
 use cid::Cid;
 use fmt::Display;
 use fvm::engine::MultiEngine;
@@ -13,11 +22,13 @@ use fvm::kernel::Context;
 use fvm::machine::Machine;
 use fvm::state_tree::{ActorState, StateTree};
 use fvm_ipld_blockstore::{Blockstore, MemoryBlockstore};
+use fvm_ipld_car::CarHeader;
 use fvm_ipld_encoding::{from_slice, CborStore};
 use fvm_shared::address::{Address, Protocol};
 use fvm_shared::crypto::signature::SECP_SIG_LEN;
 use fvm_shared::message::Message;
 use fvm_shared::receipt::Receipt;
+use fvm_shared::state::StateRoot;
 use fvm_shared::version::NetworkVersion;
 use lazy_static::lazy_static;
 use libipld_core::ipld::Ipld;
@@ -141,6 +152,14 @@ fn compare_actors(
                 for (f, (af, ef)) in a_root.iter().zip(e_root.iter()).enumerate() {
                     if af != ef {
                         log::error!("mismatched field {}: {:#?} != {:#?}", f, af, ef);
+                        // if let Ipld::Link(cid) = af {
+                        //     let slots: Vec<Ipld> = bs.get_cbor(&cid)?.unwrap();
+                        //     log::info!("aslots: {:#?}", slots);
+                        // }
+                        // if let Ipld::Link(cid) = ef {
+                        //     let slots: Vec<Ipld> = bs.get_cbor(&cid)?.unwrap();
+                        //     log::info!("eslots: {:#?}", slots);
+                        // }
                     }
                 }
             }
@@ -238,8 +257,52 @@ fn compare_state_roots(bs: &MemoryBlockstore, root: &Cid, vector: &MessageVector
         if compare_actors_success {
             return Ok(());
         }
+        if let Ok(v) = var("BLOCKSTORE_OUTPUT_DIR") {
+            let path = Path::new(v.as_str()).to_path_buf();
+            block_on(export_memory_blockstore_to_car_file(
+                bs,
+                root,
+                &vector.postconditions.state_tree.root_cid,
+                path,
+            ))?;
+        }
         return Err(anyhow!("compare actors fail"));
     }
+}
+
+pub async fn export_memory_blockstore_to_car_file(
+    memory_store: &MemoryBlockstore,
+    actual_state_root: &Cid,
+    expected_state_root: &Cid,
+    path: PathBuf,
+) -> anyhow::Result<()> {
+    //car_bytes
+    let car_header = CarHeader::new(
+        vec![actual_state_root.clone(), expected_state_root.clone()],
+        1,
+    );
+    let (tx, mut rx) = bounded(100);
+    let buffer: Arc<RwLock<Vec<u8>>> = Default::default();
+    let buffer_cloned = buffer.clone();
+    let write_task = async_std::task::spawn(async move {
+        car_header
+            .write_stream_async(&mut *buffer_cloned.write().await, &mut rx)
+            .await
+            .unwrap()
+    });
+
+    for (cid, bytes) in memory_store.blocks.borrow().iter() {
+        tx.send((cid.clone(), bytes.clone())).await.unwrap();
+    }
+    drop(tx);
+    write_task.await;
+
+    let car_bytes = buffer.read().await.clone();
+
+    let output = File::create(&path)?;
+    let mut writer = BufWriter::new(output);
+    writer.write_all(car_bytes.as_slice()).unwrap();
+    Ok(())
 }
 
 /// Represents the result from running a vector.
