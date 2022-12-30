@@ -1522,6 +1522,23 @@ dependencies = [
 [[package]]
 name = "fil_actor_account"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "frc42_dispatch",
+ "fvm_actor_utils",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_account"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "anyhow",
@@ -1558,6 +1575,21 @@ dependencies = [
 [[package]]
 name = "fil_actor_cron"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_cron"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
@@ -1573,9 +1605,10 @@ dependencies = [
 [[package]]
 name = "fil_actor_datacap"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
 dependencies = [
  "cid 0.8.6",
- "fil_actors_runtime 10.0.0-alpha.1",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
  "frc42_dispatch",
  "frc46_token",
  "fvm_actor_utils",
@@ -1614,6 +1647,20 @@ dependencies = [
 [[package]]
 name = "fil_actor_ethaccount"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hex-literal",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_ethaccount"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
@@ -1628,13 +1675,14 @@ dependencies = [
 [[package]]
 name = "fil_actor_evm"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
 dependencies = [
  "anyhow",
  "arrayvec 0.7.2",
  "bytes",
  "cid 0.8.6",
  "derive_more",
- "fil_actors_runtime 10.0.0-alpha.1",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
  "fixed-hash",
  "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1697,6 +1745,25 @@ dependencies = [
 [[package]]
 name = "fil_actor_init"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "cid 0.8.6",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "frc42_dispatch",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_hamt 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_init"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "anyhow",
@@ -1716,10 +1783,11 @@ dependencies = [
 [[package]]
 name = "fil_actor_market"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
 dependencies = [
  "anyhow",
  "cid 0.8.6",
- "fil_actors_runtime 10.0.0-alpha.1",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
  "frc42_dispatch",
  "frc46_token",
  "fvm_ipld_bitfield 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1761,6 +1829,31 @@ dependencies = [
 [[package]]
 name = "fil_actor_miner"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "byteorder",
+ "cid 0.8.6",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "frc42_dispatch",
+ "fvm_ipld_amt 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_bitfield 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_hamt 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "itertools 0.10.5",
+ "lazy_static",
+ "log",
+ "multihash 0.16.3",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_miner"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "anyhow",
@@ -1778,6 +1871,27 @@ dependencies = [
  "lazy_static",
  "log",
  "multihash 0.16.3",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_multisig"
+version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "cid 0.8.6",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "frc42_dispatch",
+ "fvm_actor_utils",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_hamt 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "indexmap",
+ "integer-encoding",
  "num-derive",
  "num-traits",
  "serde",
@@ -1807,6 +1921,23 @@ dependencies = [
 [[package]]
 name = "fil_actor_paych"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "cid 0.8.6",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "frc42_dispatch",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_paych"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "anyhow",
@@ -1822,12 +1953,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "fil_actor_placeholder"
+version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "fvm_sdk 3.0.0-alpha.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "fil_actor_placeholder"
+version = "10.0.0-alpha.1"
+source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
+dependencies = [
+ "fvm_sdk 3.0.0-alpha.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "fil_actor_power"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
 dependencies = [
  "anyhow",
  "cid 0.8.6",
- "fil_actors_runtime 10.0.0-alpha.1",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
  "frc42_dispatch",
  "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1840,15 +1990,6 @@ dependencies = [
  "num-derive",
  "num-traits",
  "serde",
-]
-
-[[package]]
-name = "fil_actor_placeholder"
-version = "10.0.0-alpha.1"
-source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
-dependencies = [
- "fvm_sdk 3.0.0-alpha.19 (registry+https://github.com/rust-lang/crates.io-index)",
- "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1876,6 +2017,22 @@ dependencies = [
 [[package]]
 name = "fil_actor_reward"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lazy_static",
+ "log",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_reward"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
@@ -1884,6 +2041,22 @@ dependencies = [
  "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static",
  "log",
+ "num-derive",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "fil_actor_system"
+version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "cid 0.8.6",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "num-derive",
  "num-traits",
  "serde",
@@ -1908,10 +2081,11 @@ dependencies = [
 [[package]]
 name = "fil_actor_verifreg"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
 dependencies = [
  "anyhow",
  "cid 0.8.6",
- "fil_actors_runtime 10.0.0-alpha.1",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
  "frc42_dispatch",
  "frc46_token",
  "fvm_actor_utils",
@@ -1946,6 +2120,37 @@ dependencies = [
  "num-derive",
  "num-traits",
  "serde",
+]
+
+[[package]]
+name = "fil_actors_runtime"
+version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "anyhow",
+ "byteorder",
+ "castaway",
+ "cid 0.8.6",
+ "fvm_ipld_amt 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_bitfield 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_blockstore 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_encoding 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_ipld_hamt 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_sdk 3.0.0-alpha.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fvm_shared 3.0.0-alpha.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "itertools 0.10.5",
+ "log",
+ "multihash 0.16.3",
+ "num",
+ "num-derive",
+ "num-traits",
+ "paste",
+ "regex",
+ "serde",
+ "serde_repr",
+ "sha2 0.10.6",
+ "thiserror",
+ "unsigned-varint",
 ]
 
 [[package]]
@@ -1993,27 +2198,54 @@ dependencies = [
 [[package]]
 name = "fil_builtin_actors_bundle"
 version = "10.0.0-alpha.1"
+source = "git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors#8d34fd0186103f0e5d188158ec77e6c27082f8e5"
+dependencies = [
+ "cid 0.8.6",
+ "clap",
+ "fil_actor_account 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_bundler",
+ "fil_actor_cron 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_datacap 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_ethaccount 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_evm 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_init 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_market 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_miner 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_multisig 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_paych 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_placeholder 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_power 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_reward 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_system 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actor_verifreg 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
+ "num-traits",
+]
+
+[[package]]
+name = "fil_builtin_actors_bundle"
+version = "10.0.0-alpha.1"
 source = "git+https://github.com/filecoin-project/builtin-actors?branch=next#393d7daeb89fc54286daeb0cf5078fb01f4756d8"
 dependencies = [
  "cid 0.8.6",
  "clap",
  "fil_actor_account 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
  "fil_actor_bundler",
- "fil_actor_cron",
- "fil_actor_datacap",
- "fil_actor_ethaccount",
- "fil_actor_evm",
- "fil_actor_init",
- "fil_actor_market",
- "fil_actor_miner",
- "fil_actor_multisig",
- "fil_actor_paych",
- "fil_actor_placeholder",
- "fil_actor_power",
- "fil_actor_reward",
- "fil_actor_system",
- "fil_actor_verifreg",
- "fil_actors_runtime",
+ "fil_actor_cron 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_datacap 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_ethaccount 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_evm 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_init 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_market 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_miner 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_multisig 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_paych 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_placeholder 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_power 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_reward 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_system 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actor_verifreg 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
+ "fil_actors_runtime 10.0.0-alpha.1 (git+https://github.com/filecoin-project/builtin-actors?branch=next)",
  "num-traits",
 ]
 
@@ -2553,7 +2785,7 @@ dependencies = [
  "derive_builder",
  "derive_more",
  "either",
- "fil_builtin_actors_bundle 10.0.0-alpha.1",
+ "fil_builtin_actors_bundle 10.0.0-alpha.1 (git+https://github.com/froghub-io/builtin-actors.git?branch=fevm-test-vectors)",
  "flate2",
  "futures",
  "fvm",
