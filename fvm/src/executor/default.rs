@@ -396,7 +396,7 @@ where
                 .is_ethaccount_actor(&sender_state.code);
 
         if self.builtin_actors().is_placeholder_actor(&sender_state.code) &&
-            sender_state.sequence == 0 &&
+            // sender_state.sequence == 0 &&
             sender_state
                 .delegated_address
                 .map(|a| matches!(a.payload(), Payload::Delegated(da) if da.namespace() == EAM_ACTOR_ID))
